@@ -20,7 +20,7 @@ async def get_user(db: AsyncSession, user_id: int) -> User:
 async def create_user(db: AsyncSession, user: UserCreate) -> User:
     hashed_password = pwd_context.hash(user.password)
     db_user = User(
-        email=user.email, 
+        email=user.email,
         first_name=user.first_name,
         last_name=user.last_name,
         password=hashed_password
