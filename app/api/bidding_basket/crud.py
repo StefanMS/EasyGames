@@ -1,21 +1,32 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from models import BiddingBasket
 from datetime import datetime
 from typing import List, Dict, Any, Optional
+from app.api.bidding_basket.models import BiddingBasket
 from app.api.collection.models import Collection
+from app.api.user.models import User
+from fastapi import HTTPException
 
 
-async def create_bid(db: AsyncSession, game_id: int,
-                     player_id: int) -> BiddingBasket:
-    new_bid = BiddingBasket(
-        game_id=game_id,
-        player_id=player_id
-    )
-    db.add(new_bid)
-    await db.commit()
-    await db.refresh(new_bid)
-    return new_bid
+async def create_bid(db: AsyncSession,
+                     game_id: int,
+                     current_user: User) -> BiddingBasket:
+
+    if int(current_user.balance) > 0:
+        current_user.balance = int(current_user.balance) - 1
+
+        new_bid = BiddingBasket(
+            game_id=game_id,
+            player_id=current_user.id
+        )
+        db.add(new_bid)
+        await db.commit()
+        await db.refresh(new_bid)
+        return new_bid
+    else:
+        raise HTTPException(status_code=403,
+                            detail="Not authorized to create bids. \
+                                    Insufficient funds")
 
 
 async def get_all_bidding_baskets(
@@ -36,7 +47,7 @@ async def get_bidding_basket_by_id(db: AsyncSession,
 async def user_filtered_collection(
     db: AsyncSession,
     active_games: List[Collection],
-    current_user_id: int,
+    current_user: User,
     skip: int = 0,
     limit: int = 10
 ) -> List[Dict[str, Any]]:
@@ -52,7 +63,7 @@ async def user_filtered_collection(
 
         enrolled_user = await db.execute(
             select(BiddingBasket).filter_by(game_id=game.game_id,
-                                            player_id=current_user_id)
+                                            player_id=current_user.id)
         )
         enrolled_user_bool = enrolled_user.scalars().first() is not None
 
@@ -75,9 +86,12 @@ async def user_filtered_collection(
     return games_json
 
 
-async def update_bid(db: AsyncSession, bid_id: int, **kwargs) -> BiddingBasket:
+async def update_bid(db: AsyncSession,
+                     bid_id: int,
+                     **kwargs) -> BiddingBasket:
+
     result = await db.execute(select(BiddingBasket).filter_by(
-        BiddingBasket.id == bid_id))
+                                        BiddingBasket.id == bid_id))
     bid = result.scalars().first()
 
     if not bid:
@@ -92,7 +106,8 @@ async def update_bid(db: AsyncSession, bid_id: int, **kwargs) -> BiddingBasket:
     return bid
 
 
-async def delete_bid(db: AsyncSession, bid_id: int) -> bool:
+async def delete_bid(db: AsyncSession, 
+                     bid_id: int) -> bool:
     result = await db.execute(select(BiddingBasket).filter_by(
         BiddingBasket.id == bid_id))
     bid = result.scalars().first()

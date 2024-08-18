@@ -10,7 +10,7 @@ from app.db.base import Base
 
 class BiddingBasket(Base):
     '''
-    class for collections
+    Class for collections
     '''
     __tablename__ = "bidding_baskets"
 
