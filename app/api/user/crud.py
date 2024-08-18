@@ -29,7 +29,8 @@ async def get_user_by_email(db: AsyncSession,
     return result.scalars().first()
 
 
-async def get_user(db: AsyncSession, user_id: int) -> User:
+async def get_user(db: AsyncSession,
+                   user_id: int) -> User:
     result = await db.execute(select(User).filter(User.id == user_id))
     return result.scalars().first()
 
@@ -41,18 +42,16 @@ async def get_all_users(db: AsyncSession,
     return result.scalars().all()
 
 
-async def change_user_email(
-    db: AsyncSession,
-    user_id: int,
-    new_email: str,
-    current_user: User
-) -> User:
+async def change_user_email(db: AsyncSession,
+                            user_id: int,
+                            new_email: str,
+                            current_user: User) -> User:
     user = await get_user(db, user_id)
     if not user:
         return None
 
     if user.id != current_user.id and not current_user.is_superuser:
-        raise HTTPException(status_code=403, 
+        raise HTTPException(status_code=403,
                             detail="Not authorized to change email")
 
     user.email = new_email
@@ -61,18 +60,16 @@ async def change_user_email(
     return user
 
 
-async def change_user_password(
-    db: AsyncSession,
-    user_id: int,
-    new_password: str,
-    current_user: User
-) -> User:
+async def change_user_password(db: AsyncSession,
+                               user_id: int,
+                               new_password: str,
+                               current_user: User) -> User:
     user = await get_user(db, user_id)
     if not user:
         return None
 
     if user.id != current_user.id and not current_user.is_superuser:
-        raise HTTPException(status_code=403, 
+        raise HTTPException(status_code=403,
                             detail="Not authorized to change password")
 
     hashed_password = pwd_context.hash(new_password)
@@ -82,33 +79,13 @@ async def change_user_password(
     return user
 
 
-def verify_password(plain_password: str, 
-                    hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
-
-
-async def authenticate_user(db: AsyncSession,
-                            email: str,
-                            password: str) -> User:
-    user = await get_user_by_email(db, email)
-    if not user:
-        return None
-    if not verify_password(password, user.password):
-        return None
-    return user
-
-
-async def top_account(db: AsyncSession,
-                      user_id: int,
-                      amount: int) -> User:
+async def top_account(db: AsyncSession, user_id: int, amount: int) -> User:
     user = await get_user(db, user_id)
     if not user:
         return None
-    try:
-        if amount > 0 and type(amount) is int:
-            user.balance += amount
-            await db.commit()
-            await db.refresh(user)
-            return user
-    except Exception as e:
-        return f'An error has occured: {e}'
+    if amount > 0:
+        user.balance += amount
+        await db.commit()
+        await db.refresh(user)
+        return user
+    raise HTTPException(status_code=400, detail="Invalid top-up amount")

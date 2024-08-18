@@ -106,7 +106,7 @@ async def update_bid(db: AsyncSession,
     return bid
 
 
-async def delete_bid(db: AsyncSession, 
+async def delete_bid(db: AsyncSession,
                      bid_id: int) -> bool:
     result = await db.execute(select(BiddingBasket).filter_by(
         BiddingBasket.id == bid_id))
