@@ -8,7 +8,8 @@ from app.api.user.crud import (
     get_all_users,
     change_user_email,
     change_user_password,
-    top_account
+    top_account,
+    delete_user
 )
 from app.api.user.schema import UserCreate, UserResponse, TokenResponse
 from app.api.user.models import User
@@ -161,3 +162,22 @@ async def logout_user(token: str = Depends(oauth2_scheme)):
     """
     blacklist_token(token)
     return {"msg": "User logged out successfully"}
+
+
+@router.delete("/users/{user_id}/delete", response_model=UserResponse)
+async def delete_user_route(
+    user_id: int,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    if current_user.is_superuser:
+        user = await delete_user(db=db,
+                                 user_id=user_id,
+                                 current_user=current_user)
+        if not user:
+            raise HTTPException(status_code=404,
+                                detail="User not found")
+        return user
+    else:
+        raise HTTPException(status_code=403,
+                            detail="Not authorized to delete users")

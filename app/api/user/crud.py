@@ -80,6 +80,24 @@ async def change_user_password(db: AsyncSession,
     return user
 
 
+async def delete_user(db: AsyncSession,
+                      user_id: int,
+                      current_user: User) -> User:
+    if current_user.is_superuser:
+        result = await db.execute(select(User).filter_by(
+            User.id == user_id))
+        user = result.scalars().first()
+        if user:
+            await db.delete(user)
+            await db.commit()
+            return user
+        else:
+            return None
+    else:
+        raise HTTPException(status_code=403,
+                            details="Not authorized to delete users")
+
+
 async def top_account(db: AsyncSession, user_id: int, amount: int) -> User:
     user = await get_user(db, user_id)
     if not user:

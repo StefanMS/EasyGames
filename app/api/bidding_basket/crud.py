@@ -1,8 +1,9 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from datetime import datetime
-from typing import List, Dict, Any, Optional
+from typing import List, Optional
 from app.api.bidding_basket.models import BiddingBasket
+from app.api.bidding_basket.schema import BiddingBasketUserFiltered
 from app.api.collection.models import Collection
 from app.api.user.models import User
 from fastapi import HTTPException
@@ -12,21 +13,29 @@ async def create_bid(db: AsyncSession,
                      game_id: int,
                      current_user: User) -> BiddingBasket:
 
-    if int(current_user.balance) > 0:
-        current_user.balance = int(current_user.balance) - 1
-
-        new_bid = BiddingBasket(
-            game_id=game_id,
-            player_id=current_user.id
-        )
-        db.add(new_bid)
-        await db.commit()
-        await db.refresh(new_bid)
-        return new_bid
-    else:
+    if not int(current_user.balance) > 0:
         raise HTTPException(status_code=403,
                             detail="Not authorized to create bids. \
                                     Insufficient funds")
+
+    bidding_basket_count = await db.execute(
+            select(BiddingBasket).filter(BiddingBasket.game_id == game_id)
+        )
+    game_capacity = len(bidding_basket_count.scalars().all())
+
+    if not game_capacity < 100:
+        raise HTTPException(status_code=403,
+                            detail="Game is full. No more bids allowed")
+
+    current_user.balance = int(current_user.balance) - 1
+    new_bid = BiddingBasket(
+        game_id=game_id,
+        player_id=current_user.id
+    )
+    db.add(new_bid)
+    await db.commit()
+    await db.refresh(new_bid)
+    return new_bid
 
 
 async def get_all_bidding_baskets(
@@ -50,16 +59,16 @@ async def user_filtered_collection(
     current_user: User,
     skip: int = 0,
     limit: int = 10
-) -> List[Dict[str, Any]]:
+) -> List[BiddingBasketUserFiltered]:
     games_json = []
 
     paginated_games = active_games[skip:skip + limit]
 
     for game in paginated_games:
         bidding_basket_count = await db.execute(
-            select(BiddingBasket).filter_by(game_id=game.game_id)
+            select(BiddingBasket).filter(BiddingBasket.game_id == game.game_id)
         )
-        game_capacity = bidding_basket_count.scalars().count()
+        game_capacity = len(bidding_basket_count.scalars().all())
 
         enrolled_user = await db.execute(
             select(BiddingBasket).filter_by(game_id=game.game_id,
@@ -70,18 +79,19 @@ async def user_filtered_collection(
         now_timestamp = datetime.now().timestamp()
         countdown = now_timestamp - game.expires_at.timestamp()
 
-        game_as_dict = {
-            'id': game.game_id,
-            'name': game.game_name,
-            'status': game.game_status,
-            'enrolled_user': enrolled_user_bool,
-            'capacity': game_capacity,
-            'countdown': {
+        game_user_filtered = BiddingBasketUserFiltered(
+            id=game.game_id,
+            game_name=game.game_name,
+            game_status=game.game_status,
+            enrolled_user=enrolled_user_bool,
+            capacity=int(game_capacity),
+            countdown={
                 'days': str(f'{int(countdown // (3600 * 24))}'),
                 'hours': str(f'{int((countdown % (3600 * 24)) // 3600)}')
             }
-        }
-        games_json.append(game_as_dict)
+        )
+
+        games_json.append(game_user_filtered)
 
     return games_json
 

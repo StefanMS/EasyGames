@@ -1,10 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, Form
 from sqlalchemy.ext.asyncio import AsyncSession
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 
 from app.api.collection.crud import (
     get_collection_by_game_id,
+    get_all_collections,
     create_game,
     update_game_status,
     update_game_expiry,
@@ -28,6 +29,18 @@ async def get_collection_route(game_id: int,
     return collection
 
 
+@router.get("/collections", response_model=List[CollectionResponse])
+async def get_all_collections_route(
+                                db: AsyncSession = Depends(get_db),
+                                skip: int = 0,
+                                limit: int = 10):
+
+    collection = await get_all_collections(db=db,
+                                           skip=skip,
+                                           limit=limit)
+    return collection
+
+
 @router.post("/add-game", response_model=CollectionResponse)
 async def add_game_route(
     game_name: str = Form(...),
@@ -46,8 +59,8 @@ async def add_game_route(
     return new_game
 
 
-@router.post("/activate-game/{game_id}",
-             response_model=Optional[CollectionResponse])
+@router.put("/activate-game/{game_id}",
+            response_model=Optional[CollectionResponse])
 async def activate_game_route(
     game_id: int,
     db: AsyncSession = Depends(get_db),
@@ -61,8 +74,8 @@ async def activate_game_route(
     return collection
 
 
-@router.post("/update-expiry/{game_id}",
-             response_model=Optional[CollectionResponse])
+@router.put("/update-expiry/{game_id}",
+            response_model=Optional[CollectionResponse])
 async def update_game_expiry_route(
     game_id: int,
     new_expiry: datetime,

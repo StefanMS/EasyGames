@@ -44,7 +44,7 @@ async def update_game_status(db: AsyncSession,
                              game_id: int,
                              current_user: User) -> Optional[Collection]:
     if current_user.is_superuser:
-        result = await db.execute(select(Collection).filter_by(
+        result = await db.execute(select(Collection).filter(
                                         Collection.game_id == game_id))
         collection = result.scalars().first()
         if collection:
@@ -66,7 +66,7 @@ async def update_game_expiry(db: AsyncSession,
                              new_expiry: datetime,
                              current_user: User) -> Optional[Collection]:
     if current_user.is_superuser:
-        result = await db.execute(select(Collection).filter_by(
+        result = await db.execute(select(Collection).filter(
                                         Collection.game_id == game_id))
         collection = result.scalars().first()
         if collection:
@@ -89,7 +89,7 @@ async def delete_game(db: AsyncSession,
     Only accessible by superusers.
     """
     if current_user.is_superuser:
-        result = await db.execute(select(Collection).filter_by(
+        result = await db.execute(select(Collection).filter(
                                         Collection.game_id == game_id))
         collection = result.scalars().first()
 

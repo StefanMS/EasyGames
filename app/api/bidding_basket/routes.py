@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from typing import List, Dict, Any, Optional
+from typing import List, Optional, Dict, Any
+from app.api.bidding_basket.schema import BiddingBasketUserFiltered
 from app.api.bidding_basket.crud import (
     create_bid,
     get_all_bidding_baskets,
@@ -53,7 +54,7 @@ async def update_bid_route(
     return updated_bid
 
 
-@router.delete("/bids/{bid_id}", response_model=Dict[str, Any])
+@router.delete("/bids/{bid_id}", response_model=BiddingBasketResponse)
 async def delete_bid_route(
     bid_id: int,
     db: AsyncSession = Depends(get_db),
@@ -97,15 +98,16 @@ async def get_bidding_basket_by_id_route(
     return bidding_basket
 
 
-@router.get("/user-collections/", response_model=List[Dict[str, Any]])
+@router.get("/user-collections/", 
+            response_model=List[BiddingBasketUserFiltered])
 async def get_user_filtered_collections_route(
     skip: int = 0,
     limit: int = 10,
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    active_games = await db.execute(select(Collection).filter_by(
-                                                game_status="active"))
+    active_games = await db.execute(select(Collection).filter(
+           Collection.game_status == "active"))
     active_games_list = active_games.scalars().all()
 
     filtered_collection = await user_filtered_collection(db,
