@@ -105,7 +105,7 @@ async def get_all_users_route(
     return users
 
 
-@router.put("/users/{user_id}/change-email", response_model=User)
+@router.put("/users/{user_id}/change-email", response_model=UserResponse)
 async def change_email_route(
     user_id: int,
     new_email: str,
@@ -121,7 +121,7 @@ async def change_email_route(
     return user
 
 
-@router.put("/users/{user_id}/change-password", response_model=User)
+@router.put("/users/{user_id}/change-password", response_model=UserResponse)
 async def change_password_route(
     user_id: int,
     new_password: str,

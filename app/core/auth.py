@@ -16,9 +16,9 @@ SECRET_KEY = settings.SECRET_KEY
 ALGORITHM = settings.ALGORITHM
 ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
 
-redis_client = redis.StrictRedis(host='localhost',
-                                 port=6379, db=0,
-                                 decode_responses=True)
+redis_client = redis.Redis(host='localhost',
+                           port=6379, db=0,
+                           decode_responses=True)
 
 
 def create_access_token(data: dict, expires_delta: timedelta = None):

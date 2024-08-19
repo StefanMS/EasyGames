@@ -12,14 +12,16 @@ from app.api.bidding_basket.crud import (
 )
 from app.core.auth import get_current_user
 from app.db.session import get_db
-from app.api.bidding_basket.models import BiddingBasket
+from app.api.bidding_basket.schema import (
+    BiddingBasketCreate,
+    BiddingBasketResponse)
 from app.api.collection.models import Collection
 from app.api.user.models import User
 
 router = APIRouter()
 
 
-@router.post("/bids/", response_model=BiddingBasket)
+@router.post("/bids/", response_model=BiddingBasketCreate)
 async def create_bid_route(
     game_id: int,
     current_user: User = Depends(get_current_user),
@@ -31,7 +33,7 @@ async def create_bid_route(
     return new_bid
 
 
-@router.put("/bids/{bid_id}", response_model=BiddingBasket)
+@router.put("/bids/{bid_id}", response_model=BiddingBasketResponse)
 async def update_bid_route(
     bid_id: int,
     db: AsyncSession = Depends(get_db),
@@ -74,7 +76,7 @@ async def delete_bid_route(
     return {"detail": "Bid deleted successfully"}
 
 
-@router.get("/bids/", response_model=List[BiddingBasket])
+@router.get("/bids/", response_model=List[BiddingBasketResponse])
 async def get_all_bidding_baskets_route(
     skip: int = 0,
     limit: int = 10,
@@ -83,7 +85,7 @@ async def get_all_bidding_baskets_route(
     return await get_all_bidding_baskets(db=db, skip=skip, limit=limit)
 
 
-@router.get("/bids/{bid_id}", response_model=Optional[BiddingBasket])
+@router.get("/bids/{bid_id}", response_model=Optional[BiddingBasketResponse])
 async def get_bidding_basket_by_id_route(
     bid_id: int,
     db: AsyncSession = Depends(get_db)
