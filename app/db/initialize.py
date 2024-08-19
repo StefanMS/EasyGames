@@ -24,4 +24,3 @@ async def create_superuser():
                 is_superuser=True
             )
             await create_user(db=session, user=admin_user_data)
-

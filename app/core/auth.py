@@ -4,11 +4,12 @@ from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.api.user.crud import get_user_by_email
+from app.api.user.crud import get_user, get_user_by_email
 from app.api.user.models import User
 from app.db.session import get_db
 from app.core.config import settings
 import redis
+import pytz
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
@@ -24,33 +25,14 @@ redis_client = redis.Redis(host='localhost',
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
     if expires_delta:
-        expire = datetime.utcnow() + expires_delta
+        expire = datetime.now(pytz.UTC) + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=15)
+        expire = datetime.now(pytz.UTC) + timedelta(minutes=15)
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    encoded_jwt = jwt.encode(to_encode,
+                             settings.SECRET_KEY,
+                             algorithm=settings.ALGORITHM)
     return encoded_jwt
-
-
-# async def get_current_user(token: str = Depends(oauth2_scheme),
-#                            db: AsyncSession = Depends(get_db)) -> User:
-#     credentials_exception = HTTPException(
-#         status_code=status.HTTP_401_UNAUTHORIZED,
-#         detail="Could not validate credentials",
-#         headers={"WWW-Authenticate": "Bearer"},
-#     )
-#     try:
-#         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-#         user_id: str = payload.get("sub")
-#         if user_id is None:
-#             raise credentials_exception
-#     except JWTError:
-#         raise credentials_exception
-
-#     user = await get_user_by_email(db, user_id)
-#     if user is None:
-#         raise credentials_exception
-#     return user
 
 
 async def authenticate_user(db: AsyncSession,
@@ -99,13 +81,14 @@ async def get_current_user(token: str = Depends(oauth2_scheme),
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        print(f"JWT Payload: {payload}")
         user_id: str = payload.get("sub")
         if user_id is None:
             raise credentials_exception
     except JWTError:
         raise credentials_exception
 
-    user = await get_user_by_email(db, user_id)
+    user = await get_user(db, user_id)
     if user is None:
         raise credentials_exception
     return user
