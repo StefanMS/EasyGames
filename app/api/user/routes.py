@@ -10,7 +10,7 @@ from app.api.user.crud import (
     change_user_password,
     top_account
 )
-from app.api.user.schema import UserCreate, UserResponse
+from app.api.user.schema import UserCreate, UserResponse, TokenResponse
 from app.api.user.models import User
 from typing import Optional, List
 from app.db.session import get_db
@@ -27,7 +27,7 @@ from app.core.config import settings
 router = APIRouter()
 
 
-@router.post("/login", response_model=UserResponse)
+@router.post("/login", response_model=TokenResponse)
 async def login_user(form_data: OAuth2PasswordRequestForm = Depends(),
                      db: AsyncSession = Depends(get_db)):
     user = await authenticate_user(db,

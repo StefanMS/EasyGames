@@ -20,7 +20,7 @@ class User(Base):
     last_name = Column(String(150))
     password = Column(String)
     balance = Column(Integer, default=0)
-    is_superuser = Column(Boolean, default=0)
+    is_superuser = Column(Boolean, default=False)
     # pylint: disable=not-callable
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
