@@ -10,7 +10,8 @@ from app.api.bidding_basket.crud import (
     update_bid,
     delete_bid
 )
-from app.db.session import get_db, get_current_user
+from app.core.auth import get_current_user
+from app.db.session import get_db
 from app.api.bidding_basket.models import BiddingBasket
 from app.api.collection.models import Collection
 from app.api.user.models import User

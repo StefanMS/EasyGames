@@ -11,7 +11,8 @@ from app.api.collection.crud import (
     delete_game,
 )
 from app.api.collection.schema import CollectionCreate, CollectionResponse
-from app.db.session import get_db, get_current_user
+from app.core.auth import get_current_user
+from app.db.session import get_db
 from app.api.user.models import User
 
 router = APIRouter()
