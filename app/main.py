@@ -25,14 +25,20 @@ async def lifespan(app: FastAPI):
     await create_superuser()
     yield
 
-
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(title="Backend for EasyGames",
+              version="0.0.1",
+              lifespan=lifespan)
 
 app.include_router(user_router)
 app.include_router(collection_router)
 app.include_router(bidding_basket_router)
 
 # Add CORS middleware
+# origins = [
+#     "http://localhost:3000",
+#     "http://127.0.0.1:3000",
+# ]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

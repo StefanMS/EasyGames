@@ -1,0 +1,26 @@
+2024-08-20 18:14:13,748 INFO BEGIN (implicit)
+2024-08-20 18:14:13,748 INFO PRAGMA main.table_info("users")
+2024-08-20 18:14:13,748 INFO [raw sql] ()
+2024-08-20 18:14:13,749 INFO PRAGMA main.table_info("collections")
+2024-08-20 18:14:13,749 INFO [raw sql] ()
+2024-08-20 18:14:13,750 INFO PRAGMA main.table_info("bidding_baskets")
+2024-08-20 18:14:13,750 INFO [raw sql] ()
+2024-08-20 18:14:13,751 INFO PRAGMA main.table_info("users")
+2024-08-20 18:14:13,751 INFO [raw sql] ()
+2024-08-20 18:14:13,752 INFO PRAGMA main.table_info("collections")
+2024-08-20 18:14:13,752 INFO [raw sql] ()
+2024-08-20 18:14:13,753 INFO PRAGMA main.table_info("bidding_baskets")
+2024-08-20 18:14:13,753 INFO [raw sql] ()
+2024-08-20 18:14:13,753 INFO PRAGMA main.table_info("users")
+2024-08-20 18:14:13,753 INFO [raw sql] ()
+2024-08-20 18:14:13,754 INFO PRAGMA main.table_info("collections")
+2024-08-20 18:14:13,754 INFO [raw sql] ()
+2024-08-20 18:14:13,754 INFO PRAGMA main.table_info("bidding_baskets")
+2024-08-20 18:14:13,755 INFO [raw sql] ()
+2024-08-20 18:14:13,755 INFO COMMIT
+2024-08-20 18:14:13,759 INFO BEGIN (implicit)
+2024-08-20 18:14:13,836 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.email = ?
+2024-08-20 18:14:13,836 INFO [generated in 0.00041s] ('admin@admin.com',)
+2024-08-20 18:14:13,838 INFO ROLLBACK

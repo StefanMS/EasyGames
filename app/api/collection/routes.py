@@ -20,7 +20,8 @@ router = APIRouter()
 
 
 @router.get("/collections/{game_id}",
-            response_model=Optional[CollectionResponse])
+            response_model=Optional[CollectionResponse],
+            tags=["Collections"])
 async def get_collection_route(game_id: int,
                                db: AsyncSession = Depends(get_db)):
     collection = await get_collection_by_game_id(db, game_id)
@@ -29,7 +30,8 @@ async def get_collection_route(game_id: int,
     return collection
 
 
-@router.get("/collections", response_model=List[CollectionResponse])
+@router.get("/collections", response_model=List[CollectionResponse],
+            tags=["Collections"])
 async def get_all_collections_route(
                                 db: AsyncSession = Depends(get_db),
                                 skip: int = 0,
@@ -41,7 +43,8 @@ async def get_all_collections_route(
     return collection
 
 
-@router.post("/add-game", response_model=CollectionResponse)
+@router.post("/add-game", response_model=CollectionResponse,
+             tags=["Collections"])
 async def add_game_route(
     game_name: str = Form(...),
     active_game: bool = Form(False),
@@ -60,7 +63,8 @@ async def add_game_route(
 
 
 @router.put("/activate-game/{game_id}",
-            response_model=Optional[CollectionResponse])
+            response_model=Optional[CollectionResponse],
+            tags=["Collections"])
 async def activate_game_route(
     game_id: int,
     db: AsyncSession = Depends(get_db),
@@ -75,7 +79,8 @@ async def activate_game_route(
 
 
 @router.put("/update-expiry/{game_id}",
-            response_model=Optional[CollectionResponse])
+            response_model=Optional[CollectionResponse],
+            tags=["Collections"])
 async def update_game_expiry_route(
     game_id: int,
     new_expiry: datetime,
@@ -92,7 +97,8 @@ async def update_game_expiry_route(
 
 
 @router.delete("/delete-game/{game_id}",
-               response_model=Optional[CollectionResponse])
+               response_model=Optional[CollectionResponse],
+               tags=["Collections"])
 async def delete_game_route(
     game_id: int,
     db: AsyncSession = Depends(get_db),

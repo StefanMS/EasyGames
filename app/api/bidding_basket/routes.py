@@ -22,7 +22,8 @@ from app.api.user.models import User
 router = APIRouter()
 
 
-@router.post("/bids/", response_model=BiddingBasketCreate)
+@router.post("/bids/", response_model=BiddingBasketCreate,
+             tags=["Bidding Basket"])
 async def create_bid_route(
     game_id: int,
     current_user: User = Depends(get_current_user),
@@ -34,7 +35,8 @@ async def create_bid_route(
     return new_bid
 
 
-@router.put("/bids/{bid_id}", response_model=BiddingBasketResponse)
+@router.put("/bids/{bid_id}", response_model=BiddingBasketResponse,
+            tags=["Bidding Basket"])
 async def update_bid_route(
     bid_id: int,
     db: AsyncSession = Depends(get_db),
@@ -54,7 +56,8 @@ async def update_bid_route(
     return updated_bid
 
 
-@router.delete("/bids/{bid_id}", response_model=BiddingBasketResponse)
+@router.delete("/bids/{bid_id}", response_model=BiddingBasketResponse,
+               tags=["Bidding Basket"])
 async def delete_bid_route(
     bid_id: int,
     db: AsyncSession = Depends(get_db),
@@ -77,7 +80,8 @@ async def delete_bid_route(
     return {"detail": "Bid deleted successfully"}
 
 
-@router.get("/bids/", response_model=List[BiddingBasketResponse])
+@router.get("/bids/", response_model=List[BiddingBasketResponse],
+            tags=["Bidding Basket"])
 async def get_all_bidding_baskets_route(
     skip: int = 0,
     limit: int = 10,
@@ -86,7 +90,8 @@ async def get_all_bidding_baskets_route(
     return await get_all_bidding_baskets(db=db, skip=skip, limit=limit)
 
 
-@router.get("/bids/{bid_id}", response_model=Optional[BiddingBasketResponse])
+@router.get("/bids/{bid_id}", response_model=Optional[BiddingBasketResponse],
+            tags=["Bidding Basket"])
 async def get_bidding_basket_by_id_route(
     bid_id: int,
     db: AsyncSession = Depends(get_db)
@@ -98,8 +103,9 @@ async def get_bidding_basket_by_id_route(
     return bidding_basket
 
 
-@router.get("/user-collections/", 
-            response_model=List[BiddingBasketUserFiltered])
+@router.get("/user-collections/",
+            response_model=List[BiddingBasketUserFiltered],
+            tags=["Bidding Basket"])
 async def get_user_filtered_collections_route(
     skip: int = 0,
     limit: int = 10,

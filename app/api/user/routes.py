@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.security import OAuth2PasswordRequestForm
+from sqlalchemy.ext.asyncio import AsyncSession
+from typing import Optional, List
+from datetime import timedelta
 from app.api.user.crud import (
     create_user,
     get_user_by_email,
@@ -13,7 +15,6 @@ from app.api.user.crud import (
 )
 from app.api.user.schema import UserCreate, UserResponse, TokenResponse
 from app.api.user.models import User
-from typing import Optional, List
 from app.db.session import get_db
 from app.core.auth import (
     authenticate_user,
@@ -21,14 +22,15 @@ from app.core.auth import (
     get_current_user,
     blacklist_token,
     oauth2_scheme)
-from datetime import timedelta
 from app.core.config import settings
+from app.logs.logs import logging
 
 
 router = APIRouter()
 
 
-@router.post("/login", response_model=TokenResponse)
+@router.post("/login", response_model=TokenResponse,
+             tags=["User"])
 async def login_user(form_data: OAuth2PasswordRequestForm = Depends(),
                      db: AsyncSession = Depends(get_db)):
     user = await authenticate_user(db,
@@ -44,10 +46,12 @@ async def login_user(form_data: OAuth2PasswordRequestForm = Depends(),
                             minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(data={"sub": str(user.id)},
                                        expires_delta=access_token_expires)
+    logging.info(f"User {user.id} logged in")
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@router.post("/sign-up", response_model=UserResponse)
+@router.post("/sign-up", response_model=UserResponse,
+             tags=["User"])
 async def sign_up_user(user: UserCreate, db: AsyncSession = Depends(get_db)):
     existing_user = await get_user_by_email(db, email=user.email)
     if existing_user:
@@ -56,10 +60,12 @@ async def sign_up_user(user: UserCreate, db: AsyncSession = Depends(get_db)):
             detail="Email already registered"
         )
     created_user = await create_user(db, user)
+    logging.info(f"User {created_user.id} created")
     return created_user
 
 
-@router.get("/users/{user_id}", response_model=Optional[UserResponse])
+@router.get("/users/{user_id}", response_model=Optional[UserResponse],
+            tags=["User"])
 async def get_user_by_id_route(
     user_id: int,
     db: AsyncSession = Depends(get_db),
@@ -76,7 +82,8 @@ async def get_user_by_id_route(
     return user
 
 
-@router.get("/users/email/{email}", response_model=Optional[UserResponse])
+@router.get("/users/email/{email}", response_model=Optional[UserResponse],
+            tags=["User"])
 async def get_user_by_email_route(
     email: str,
     db: AsyncSession = Depends(get_db),
@@ -92,7 +99,8 @@ async def get_user_by_email_route(
     return user
 
 
-@router.get("/users/", response_model=List[UserResponse])
+@router.get("/users/", response_model=List[UserResponse],
+            tags=["User"])
 async def get_all_users_route(
     skip: int = 0,
     limit: int = 10,
@@ -106,7 +114,8 @@ async def get_all_users_route(
     return users
 
 
-@router.put("/users/{user_id}/change-email", response_model=UserResponse)
+@router.put("/users/{user_id}/change-email", response_model=UserResponse,
+            tags=["User"])
 async def change_email_route(
     user_id: int,
     new_email: str,
@@ -117,12 +126,14 @@ async def change_email_route(
                                    user_id=user_id,
                                    new_email=new_email,
                                    current_user=current_user)
+    logging.info(f"User {user.id} email changed to {new_email}")
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
 
-@router.put("/users/{user_id}/change-password", response_model=UserResponse)
+@router.put("/users/{user_id}/change-password", response_model=UserResponse,
+            tags=["User"])
 async def change_password_route(
     user_id: int,
     new_password: str,
@@ -133,12 +144,14 @@ async def change_password_route(
                                       user_id=user_id,
                                       new_password=new_password,
                                       current_user=current_user)
+    logging.info(f"User {user.id} password changed")
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
 
-@router.post("/users/{user_id}/top-up", response_model=UserResponse)
+@router.post("/users/{user_id}/top-up", response_model=UserResponse,
+             tags=["User"])
 async def top_up_balance_route(
     user_id: int,
     amount: int,
@@ -150,6 +163,7 @@ async def top_up_balance_route(
                             detail="Not authorized to top up this account")
 
     user = await top_account(db=db, user_id=user_id, amount=amount)
+    logging.info(f"User {user.id} top up by {amount}")
     if not user:
         raise HTTPException(status_code=404,
                             detail="User not found")
@@ -164,7 +178,8 @@ async def logout_user(token: str = Depends(oauth2_scheme)):
     return {"msg": "User logged out successfully"}
 
 
-@router.delete("/users/{user_id}/delete", response_model=UserResponse)
+@router.delete("/users/{user_id}/delete", response_model=UserResponse,
+               tags=["User"])
 async def delete_user_route(
     user_id: int,
     db: AsyncSession = Depends(get_db),
