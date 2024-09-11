@@ -1,26 +1,435 @@
-2024-08-20 18:14:13,748 INFO BEGIN (implicit)
-2024-08-20 18:14:13,748 INFO PRAGMA main.table_info("users")
-2024-08-20 18:14:13,748 INFO [raw sql] ()
-2024-08-20 18:14:13,749 INFO PRAGMA main.table_info("collections")
-2024-08-20 18:14:13,749 INFO [raw sql] ()
-2024-08-20 18:14:13,750 INFO PRAGMA main.table_info("bidding_baskets")
-2024-08-20 18:14:13,750 INFO [raw sql] ()
-2024-08-20 18:14:13,751 INFO PRAGMA main.table_info("users")
-2024-08-20 18:14:13,751 INFO [raw sql] ()
-2024-08-20 18:14:13,752 INFO PRAGMA main.table_info("collections")
-2024-08-20 18:14:13,752 INFO [raw sql] ()
-2024-08-20 18:14:13,753 INFO PRAGMA main.table_info("bidding_baskets")
-2024-08-20 18:14:13,753 INFO [raw sql] ()
-2024-08-20 18:14:13,753 INFO PRAGMA main.table_info("users")
-2024-08-20 18:14:13,753 INFO [raw sql] ()
-2024-08-20 18:14:13,754 INFO PRAGMA main.table_info("collections")
-2024-08-20 18:14:13,754 INFO [raw sql] ()
-2024-08-20 18:14:13,754 INFO PRAGMA main.table_info("bidding_baskets")
-2024-08-20 18:14:13,755 INFO [raw sql] ()
-2024-08-20 18:14:13,755 INFO COMMIT
-2024-08-20 18:14:13,759 INFO BEGIN (implicit)
-2024-08-20 18:14:13,836 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+2024-09-10 18:42:36,837 INFO BEGIN (implicit)
+2024-09-10 18:42:36,838 INFO PRAGMA main.table_info("users")
+2024-09-10 18:42:36,838 INFO [raw sql] ()
+2024-09-10 18:42:36,839 INFO PRAGMA main.table_info("collections")
+2024-09-10 18:42:36,839 INFO [raw sql] ()
+2024-09-10 18:42:36,840 INFO PRAGMA main.table_info("bidding_baskets")
+2024-09-10 18:42:36,840 INFO [raw sql] ()
+2024-09-10 18:42:36,841 INFO PRAGMA main.table_info("users")
+2024-09-10 18:42:36,841 INFO [raw sql] ()
+2024-09-10 18:42:36,843 INFO PRAGMA main.table_info("collections")
+2024-09-10 18:42:36,843 INFO [raw sql] ()
+2024-09-10 18:42:36,844 INFO PRAGMA main.table_info("bidding_baskets")
+2024-09-10 18:42:36,844 INFO [raw sql] ()
+2024-09-10 18:42:36,845 INFO PRAGMA main.table_info("users")
+2024-09-10 18:42:36,845 INFO [raw sql] ()
+2024-09-10 18:42:36,846 INFO PRAGMA main.table_info("collections")
+2024-09-10 18:42:36,846 INFO [raw sql] ()
+2024-09-10 18:42:36,847 INFO PRAGMA main.table_info("bidding_baskets")
+2024-09-10 18:42:36,847 INFO [raw sql] ()
+2024-09-10 18:42:36,848 INFO COMMIT
+2024-09-10 18:42:36,851 INFO BEGIN (implicit)
+2024-09-10 18:42:36,915 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
 FROM users 
 WHERE users.email = ?
-2024-08-20 18:14:13,836 INFO [generated in 0.00041s] ('admin@admin.com',)
-2024-08-20 18:14:13,838 INFO ROLLBACK
+2024-09-10 18:42:36,915 INFO [generated in 0.00028s] ('admin@admin.com',)
+2024-09-10 18:42:36,916 INFO ROLLBACK
+2024-09-10 18:46:11,331 INFO BEGIN (implicit)
+2024-09-10 18:46:11,331 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.email = ?
+2024-09-10 18:46:11,332 INFO [cached since 214.4s ago] ('stef@stef.com',)
+2024-09-10 18:46:11,334 WARNING (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/home/stefan/Workspace/EasyGames/EasyGames_backend/.venv/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2024-09-10 18:46:11,735 INFO INSERT INTO users (email, first_name, last_name, password, balance, is_superuser) VALUES (?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2024-09-10 18:46:11,735 INFO [generated in 0.00036s] ('stef@stef.com', 'stef', 'stef', '$2b$12$apJcDjiXTnQT4nVFzBiulu1q9tJ/cvZCHAyxBrTU7oT8GY41//ob6', 0, 0)
+2024-09-10 18:46:11,736 INFO COMMIT
+2024-09-10 18:46:11,743 INFO BEGIN (implicit)
+2024-09-10 18:46:11,746 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.id = ?
+2024-09-10 18:46:11,746 INFO [generated in 0.00048s] (4,)
+2024-09-10 18:46:11,750 INFO User 4 created
+2024-09-10 18:46:11,751 INFO ROLLBACK
+2024-09-10 18:46:40,360 INFO BEGIN (implicit)
+2024-09-10 18:46:40,360 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.email = ?
+2024-09-10 18:46:40,361 INFO [cached since 243.4s ago] ('admin@admin.com',)
+2024-09-10 18:46:40,689 INFO User 1 logged in
+2024-09-10 18:46:40,689 INFO ROLLBACK
+2024-09-10 18:46:44,501 INFO BEGIN (implicit)
+2024-09-10 18:46:44,502 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.id = ?
+2024-09-10 18:46:44,503 INFO [generated in 0.00023s] ('1',)
+2024-09-10 18:46:44,505 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users
+ LIMIT ? OFFSET ?
+2024-09-10 18:46:44,505 INFO [generated in 0.00028s] (10, 0)
+2024-09-10 18:46:44,508 INFO ROLLBACK
+2024-09-10 19:25:54,142 INFO BEGIN (implicit)
+2024-09-10 19:25:54,144 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.email = ?
+2024-09-10 19:25:54,144 INFO [cached since 2597s ago] ('stefufu',)
+2024-09-10 19:25:54,145 INFO ROLLBACK
+2024-09-10 19:26:39,456 INFO BEGIN (implicit)
+2024-09-10 19:26:39,457 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.email = ?
+2024-09-10 19:26:39,457 INFO [cached since 2643s ago] ('admin@admin.com',)
+2024-09-10 19:26:39,795 INFO User 1 logged in
+2024-09-10 19:26:39,798 INFO ROLLBACK
+2024-09-10 19:40:49,274 INFO BEGIN (implicit)
+2024-09-10 19:40:49,275 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.email = ?
+2024-09-10 19:40:49,275 INFO [cached since 3492s ago] ('admin@admin',)
+2024-09-10 19:40:49,276 INFO ROLLBACK
+2024-09-10 19:40:55,931 INFO BEGIN (implicit)
+2024-09-10 19:40:55,932 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.email = ?
+2024-09-10 19:40:55,932 INFO [cached since 3499s ago] ('admin',)
+2024-09-10 19:40:55,933 INFO ROLLBACK
+2024-09-10 19:42:41,417 INFO BEGIN (implicit)
+2024-09-10 19:42:41,418 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.email = ?
+2024-09-10 19:42:41,418 INFO [cached since 3605s ago] ('admin@admin',)
+2024-09-10 19:42:41,419 INFO ROLLBACK
+2024-09-10 19:42:50,866 INFO BEGIN (implicit)
+2024-09-10 19:42:50,866 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.email = ?
+2024-09-10 19:42:50,867 INFO [cached since 3614s ago] ('admin',)
+2024-09-10 19:42:50,868 INFO ROLLBACK
+2024-09-10 19:43:33,807 INFO BEGIN (implicit)
+2024-09-10 19:43:33,808 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.email = ?
+2024-09-10 19:43:33,808 INFO [cached since 3657s ago] ('admin',)
+2024-09-10 19:43:33,809 INFO ROLLBACK
+2024-09-10 19:43:41,273 INFO BEGIN (implicit)
+2024-09-10 19:43:41,273 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.email = ?
+2024-09-10 19:43:41,273 INFO [cached since 3664s ago] ('admin@admin.com',)
+2024-09-10 19:43:41,603 INFO User 1 logged in
+2024-09-10 19:43:41,604 INFO ROLLBACK
+2024-09-10 19:44:23,755 INFO BEGIN (implicit)
+2024-09-10 19:44:23,756 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.email = ?
+2024-09-10 19:44:23,756 INFO [cached since 3707s ago] ('admin@admin.com',)
+2024-09-10 19:44:24,099 INFO User 1 logged in
+2024-09-10 19:44:24,100 INFO ROLLBACK
+2024-09-10 19:44:45,259 INFO BEGIN (implicit)
+2024-09-10 19:44:45,260 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.email = ?
+2024-09-10 19:44:45,260 INFO [cached since 3728s ago] ('admin@admin.com',)
+2024-09-10 19:44:45,599 INFO User 1 logged in
+2024-09-10 19:44:45,599 INFO ROLLBACK
+2024-09-10 19:45:51,069 INFO BEGIN (implicit)
+2024-09-10 19:45:51,069 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.email = ?
+2024-09-10 19:45:51,069 INFO [cached since 3794s ago] ('admin@admin.com',)
+2024-09-10 19:45:51,408 INFO User 1 logged in
+2024-09-10 19:45:51,409 INFO ROLLBACK
+2024-09-10 19:45:51,714 INFO BEGIN (implicit)
+2024-09-10 19:45:51,716 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections
+ LIMIT ? OFFSET ?
+2024-09-10 19:45:51,716 INFO [generated in 0.00025s] (10, 0)
+2024-09-10 19:45:51,720 INFO ROLLBACK
+2024-09-10 19:47:38,329 INFO BEGIN (implicit)
+2024-09-10 19:47:38,331 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections
+ LIMIT ? OFFSET ?
+2024-09-10 19:47:38,331 INFO [cached since 106.6s ago] (10, 0)
+2024-09-10 19:47:38,340 INFO ROLLBACK
+2024-09-10 19:48:05,717 INFO BEGIN (implicit)
+2024-09-10 19:48:05,718 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections 
+WHERE collections.game_id = ?
+2024-09-10 19:48:05,718 INFO [generated in 0.00032s] (1,)
+2024-09-10 19:48:05,719 INFO ROLLBACK
+2024-09-11 12:26:18,272 INFO BEGIN (implicit)
+2024-09-11 12:26:18,273 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections
+ LIMIT ? OFFSET ?
+2024-09-11 12:26:18,274 INFO [cached since 6.003e+04s ago] (10, 0)
+2024-09-11 12:26:18,294 INFO ROLLBACK
+2024-09-11 12:32:41,173 INFO BEGIN (implicit)
+2024-09-11 12:32:41,175 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections
+ LIMIT ? OFFSET ?
+2024-09-11 12:32:41,176 INFO [cached since 6.041e+04s ago] (10, 0)
+2024-09-11 12:32:41,200 INFO ROLLBACK
+2024-09-11 12:32:41,438 INFO BEGIN (implicit)
+2024-09-11 12:32:41,439 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections
+ LIMIT ? OFFSET ?
+2024-09-11 12:32:41,444 INFO [cached since 6.041e+04s ago] (10, 0)
+2024-09-11 12:32:41,447 INFO ROLLBACK
+2024-09-11 12:41:02,947 INFO BEGIN (implicit)
+2024-09-11 12:41:02,947 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections
+ LIMIT ? OFFSET ?
+2024-09-11 12:41:02,948 INFO [cached since 6.091e+04s ago] (10, 0)
+2024-09-11 12:41:02,950 INFO ROLLBACK
+2024-09-11 12:44:36,882 INFO BEGIN (implicit)
+2024-09-11 12:44:36,882 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections
+ LIMIT ? OFFSET ?
+2024-09-11 12:44:36,882 INFO [cached since 6.113e+04s ago] (10, 0)
+2024-09-11 12:44:36,884 INFO ROLLBACK
+2024-09-11 12:45:17,502 INFO BEGIN (implicit)
+2024-09-11 12:45:17,502 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections
+ LIMIT ? OFFSET ?
+2024-09-11 12:45:17,503 INFO [cached since 6.117e+04s ago] (10, 0)
+2024-09-11 12:45:17,505 INFO ROLLBACK
+2024-09-11 12:45:22,640 INFO BEGIN (implicit)
+2024-09-11 12:45:22,640 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections
+ LIMIT ? OFFSET ?
+2024-09-11 12:45:22,640 INFO [cached since 6.117e+04s ago] (10, 0)
+2024-09-11 12:45:22,642 INFO ROLLBACK
+2024-09-11 12:45:41,457 INFO BEGIN (implicit)
+2024-09-11 12:45:41,457 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections
+ LIMIT ? OFFSET ?
+2024-09-11 12:45:41,457 INFO [cached since 6.119e+04s ago] (10, 0)
+2024-09-11 12:45:41,458 INFO ROLLBACK
+2024-09-11 12:50:03,018 INFO BEGIN (implicit)
+2024-09-11 12:50:03,018 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections
+ LIMIT ? OFFSET ?
+2024-09-11 12:50:03,018 INFO [cached since 6.145e+04s ago] (10, 0)
+2024-09-11 12:50:03,020 INFO ROLLBACK
+2024-09-11 12:51:11,738 INFO BEGIN (implicit)
+2024-09-11 12:51:11,739 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections
+ LIMIT ? OFFSET ?
+2024-09-11 12:51:11,739 INFO [cached since 6.152e+04s ago] (10, 0)
+2024-09-11 12:51:11,740 INFO ROLLBACK
+2024-09-11 12:51:29,359 INFO BEGIN (implicit)
+2024-09-11 12:51:29,360 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.email = ?
+2024-09-11 12:51:29,360 INFO [cached since 6.533e+04s ago] ('admin@admin.com',)
+2024-09-11 12:51:29,712 INFO User 1 logged in
+2024-09-11 12:51:29,713 INFO ROLLBACK
+2024-09-11 12:51:29,766 INFO BEGIN (implicit)
+2024-09-11 12:51:29,766 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections
+ LIMIT ? OFFSET ?
+2024-09-11 12:51:29,767 INFO [cached since 6.154e+04s ago] (10, 0)
+2024-09-11 12:51:29,768 INFO ROLLBACK
+2024-09-11 13:33:52,761 INFO BEGIN (implicit)
+2024-09-11 13:33:52,761 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.email = ?
+2024-09-11 13:33:52,761 INFO [cached since 6.788e+04s ago] ('admin@admin.com',)
+2024-09-11 13:33:53,094 INFO User 1 logged in
+2024-09-11 13:33:53,095 INFO ROLLBACK
+2024-09-11 13:33:56,776 INFO BEGIN (implicit)
+2024-09-11 13:33:56,777 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.id = ?
+2024-09-11 13:33:56,777 INFO [cached since 6.763e+04s ago] ('1',)
+2024-09-11 13:33:56,782 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections 
+WHERE collections.game_status = ?
+2024-09-11 13:33:56,782 INFO [generated in 0.00059s] ('active',)
+2024-09-11 13:33:56,785 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ?
+2024-09-11 13:33:56,785 INFO [generated in 0.00024s] (1,)
+2024-09-11 13:33:56,787 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ? AND bidding_baskets.player_id = ?
+2024-09-11 13:33:56,788 INFO [generated in 0.00034s] (1, 1)
+2024-09-11 13:33:56,789 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ?
+2024-09-11 13:33:56,789 INFO [cached since 0.004562s ago] (2,)
+2024-09-11 13:33:56,790 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ? AND bidding_baskets.player_id = ?
+2024-09-11 13:33:56,791 INFO [cached since 0.003192s ago] (2, 1)
+2024-09-11 13:33:56,791 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ?
+2024-09-11 13:33:56,792 INFO [cached since 0.006624s ago] (3,)
+2024-09-11 13:33:56,792 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ? AND bidding_baskets.player_id = ?
+2024-09-11 13:33:56,792 INFO [cached since 0.005103s ago] (3, 1)
+2024-09-11 13:33:56,794 INFO ROLLBACK
+2024-09-11 13:48:38,160 INFO BEGIN (implicit)
+2024-09-11 13:48:38,160 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.email = ?
+2024-09-11 13:48:38,160 INFO [cached since 6.876e+04s ago] ('admin@admin.com',)
+2024-09-11 13:48:38,485 INFO User 1 logged in
+2024-09-11 13:48:38,486 INFO ROLLBACK
+2024-09-11 13:48:38,608 INFO BEGIN (implicit)
+2024-09-11 13:48:38,609 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections
+ LIMIT ? OFFSET ?
+2024-09-11 13:48:38,609 INFO [cached since 6.497e+04s ago] (10, 0)
+2024-09-11 13:48:38,611 INFO ROLLBACK
+2024-09-11 13:52:09,896 INFO BEGIN (implicit)
+2024-09-11 13:52:09,897 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.id = ?
+2024-09-11 13:52:09,897 INFO [cached since 6.873e+04s ago] ('1',)
+2024-09-11 13:52:09,900 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections 
+WHERE collections.game_status = ?
+2024-09-11 13:52:09,900 INFO [cached since 1093s ago] ('active',)
+2024-09-11 13:52:09,901 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ?
+2024-09-11 13:52:09,901 INFO [cached since 1093s ago] (1,)
+2024-09-11 13:52:09,903 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ? AND bidding_baskets.player_id = ?
+2024-09-11 13:52:09,903 INFO [cached since 1093s ago] (1, 1)
+2024-09-11 13:52:09,905 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ?
+2024-09-11 13:52:09,906 INFO [cached since 1093s ago] (2,)
+2024-09-11 13:52:09,907 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ? AND bidding_baskets.player_id = ?
+2024-09-11 13:52:09,908 INFO [cached since 1093s ago] (2, 1)
+2024-09-11 13:52:09,910 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ?
+2024-09-11 13:52:09,910 INFO [cached since 1093s ago] (3,)
+2024-09-11 13:52:09,912 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ? AND bidding_baskets.player_id = ?
+2024-09-11 13:52:09,912 INFO [cached since 1093s ago] (3, 1)
+2024-09-11 13:52:09,914 INFO ROLLBACK
+2024-09-11 13:54:49,722 INFO BEGIN (implicit)
+2024-09-11 13:54:49,723 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.id = ?
+2024-09-11 13:54:49,723 INFO [cached since 6.889e+04s ago] ('1',)
+2024-09-11 13:54:49,725 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections 
+WHERE collections.game_status = ?
+2024-09-11 13:54:49,725 INFO [cached since 1253s ago] ('active',)
+2024-09-11 13:54:49,728 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ?
+2024-09-11 13:54:49,728 INFO [cached since 1253s ago] (1,)
+2024-09-11 13:54:49,730 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ? AND bidding_baskets.player_id = ?
+2024-09-11 13:54:49,730 INFO [cached since 1253s ago] (1, 1)
+2024-09-11 13:54:49,731 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ?
+2024-09-11 13:54:49,731 INFO [cached since 1253s ago] (2,)
+2024-09-11 13:54:49,733 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ? AND bidding_baskets.player_id = ?
+2024-09-11 13:54:49,733 INFO [cached since 1253s ago] (2, 1)
+2024-09-11 13:54:49,738 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ?
+2024-09-11 13:54:49,739 INFO [cached since 1253s ago] (3,)
+2024-09-11 13:54:49,742 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ? AND bidding_baskets.player_id = ?
+2024-09-11 13:54:49,742 INFO [cached since 1253s ago] (3, 1)
+2024-09-11 13:54:49,743 INFO ROLLBACK
+2024-09-11 13:57:07,574 INFO BEGIN (implicit)
+2024-09-11 13:57:07,575 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections
+ LIMIT ? OFFSET ?
+2024-09-11 13:57:07,575 INFO [cached since 6.548e+04s ago] (10, 0)
+2024-09-11 13:57:07,576 INFO ROLLBACK
+2024-09-11 13:57:14,040 INFO BEGIN (implicit)
+2024-09-11 13:57:14,040 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.email = ?
+2024-09-11 13:57:14,041 INFO [cached since 6.928e+04s ago] ('admin@admin.com',)
+2024-09-11 13:57:14,383 INFO User 1 logged in
+2024-09-11 13:57:14,384 INFO ROLLBACK
+2024-09-11 13:57:14,432 INFO BEGIN (implicit)
+2024-09-11 13:57:14,432 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections
+ LIMIT ? OFFSET ?
+2024-09-11 13:57:14,433 INFO [cached since 6.548e+04s ago] (10, 0)
+2024-09-11 13:57:14,434 INFO ROLLBACK
+2024-09-11 13:57:24,269 INFO BEGIN (implicit)
+2024-09-11 13:57:24,269 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.id = ?
+2024-09-11 13:57:24,269 INFO [cached since 6.904e+04s ago] ('1',)
+2024-09-11 13:57:24,274 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections 
+WHERE collections.game_status = ?
+2024-09-11 13:57:24,274 INFO [cached since 1407s ago] ('active',)
+2024-09-11 13:57:24,281 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ?
+2024-09-11 13:57:24,281 INFO [cached since 1407s ago] (1,)
+2024-09-11 13:57:24,287 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ? AND bidding_baskets.player_id = ?
+2024-09-11 13:57:24,289 INFO [cached since 1407s ago] (1, 1)
+2024-09-11 13:57:24,292 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ?
+2024-09-11 13:57:24,292 INFO [cached since 1408s ago] (2,)
+2024-09-11 13:57:24,294 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ? AND bidding_baskets.player_id = ?
+2024-09-11 13:57:24,295 INFO [cached since 1408s ago] (2, 1)
+2024-09-11 13:57:24,296 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ?
+2024-09-11 13:57:24,298 INFO [cached since 1408s ago] (3,)
+2024-09-11 13:57:24,301 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ? AND bidding_baskets.player_id = ?
+2024-09-11 13:57:24,308 INFO [cached since 1408s ago] (3, 1)
+2024-09-11 13:57:24,314 INFO ROLLBACK
+2024-09-11 13:59:56,097 INFO BEGIN (implicit)
+2024-09-11 13:59:56,099 INFO SELECT users.id, users.email, users.first_name, users.last_name, users.password, users.balance, users.is_superuser, users.created_at 
+FROM users 
+WHERE users.id = ?
+2024-09-11 13:59:56,099 INFO [cached since 6.919e+04s ago] ('1',)
+2024-09-11 13:59:56,103 INFO SELECT collections.game_id, collections.game_name, collections.game_status, collections.expires_at, collections.created_at 
+FROM collections 
+WHERE collections.game_status = ?
+2024-09-11 13:59:56,103 INFO [cached since 1559s ago] ('active',)
+2024-09-11 13:59:56,105 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ?
+2024-09-11 13:59:56,105 INFO [cached since 1559s ago] (1,)
+2024-09-11 13:59:56,106 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ? AND bidding_baskets.player_id = ?
+2024-09-11 13:59:56,107 INFO [cached since 1559s ago] (1, 1)
+2024-09-11 13:59:56,108 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ?
+2024-09-11 13:59:56,108 INFO [cached since 1559s ago] (2,)
+2024-09-11 13:59:56,110 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ? AND bidding_baskets.player_id = ?
+2024-09-11 13:59:56,110 INFO [cached since 1559s ago] (2, 1)
+2024-09-11 13:59:56,112 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ?
+2024-09-11 13:59:56,112 INFO [cached since 1559s ago] (3,)
+2024-09-11 13:59:56,113 INFO SELECT bidding_baskets.id, bidding_baskets.game_id, bidding_baskets.player_id, bidding_baskets.created_at 
+FROM bidding_baskets 
+WHERE bidding_baskets.game_id = ? AND bidding_baskets.player_id = ?
+2024-09-11 13:59:56,113 INFO [cached since 1559s ago] (3, 1)
+2024-09-11 13:59:56,114 INFO ROLLBACK
