@@ -150,7 +150,7 @@ async def change_password_route(
     return user
 
 
-@router.post("/users/{user_id}/top-up", response_model=UserResponse,
+@router.post("/users/{user_id}/top-up/{amount}", response_model=UserResponse,
              tags=["User"])
 async def top_up_balance_route(
     user_id: int,
