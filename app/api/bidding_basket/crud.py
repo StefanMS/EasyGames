@@ -6,7 +6,10 @@ from app.api.bidding_basket.models import BiddingBasket
 from app.api.bidding_basket.schema import BiddingBasketUserFiltered
 from app.api.collection.models import Collection
 from app.api.user.models import User
+from app.core.config import settings
 from fastapi import HTTPException
+
+BUCKET_URL = settings.BUCKET_URL
 
 
 async def create_bid(db: AsyncSession,
@@ -88,7 +91,8 @@ async def user_filtered_collection(
             countdown={
                 'days': str(f'{int(countdown // (3600 * 24))}'),
                 'hours': str(f'{int((countdown % (3600 * 24)) // 3600)}')
-            }
+            },
+            image_url=f"{BUCKET_URL}/{str(game.game_id)}.jpeg"
         )
 
         games_json.append(game_user_filtered)

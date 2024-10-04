@@ -40,6 +40,7 @@ class BiddingBasketUserFiltered(BaseModel):
     enrolled_user: bool
     capacity: int
     countdown: Dict[str, str]
+    image_url: str
 
     class Config:
         orm_mode = True

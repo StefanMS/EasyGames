@@ -20,6 +20,8 @@ class Settings(BaseSettings):
     ADMIN_USER_FIRST_NAME: str
     ADMIN_USER_LAST_NAME: str
 
+    BUCKET_URL: str = "https://zdybzhhqrimkhrbljuvs.supabase.co/storage/v1/object/public/GamesBucket"
+
     class Config:
         env_file = ".env"
 
