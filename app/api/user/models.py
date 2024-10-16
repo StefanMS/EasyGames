@@ -2,7 +2,7 @@
 Models for users
 '''
 
-from sqlalchemy import Column, Integer, String, DateTime, Boolean
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, BigInteger
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.db.base import Base
@@ -14,7 +14,7 @@ class User(Base):
     '''
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(BigInteger, primary_key=True, index=True)
     email = Column(String, unique=True, index=True)
     first_name = Column(String(150))
     last_name = Column(String(150))

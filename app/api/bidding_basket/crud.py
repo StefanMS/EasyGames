@@ -69,13 +69,13 @@ async def user_filtered_collection(
 
     for game in paginated_games:
         bidding_basket_count = await db.execute(
-            select(BiddingBasket).filter(BiddingBasket.game_id == game.game_id)
+            select(BiddingBasket).filter(BiddingBasket.game_id == int(game.game_id))
         )
         game_capacity = len(bidding_basket_count.scalars().all())
 
         enrolled_user = await db.execute(
-            select(BiddingBasket).filter_by(game_id=game.game_id,
-                                            player_id=current_user.id)
+            select(BiddingBasket).filter_by(game_id=int(game.game_id),
+                                            player_id=int(current_user.id))
         )
         enrolled_user_bool = enrolled_user.scalars().first() is not None
 
