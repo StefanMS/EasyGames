@@ -32,7 +32,7 @@ async def get_user_by_email(db: AsyncSession,
 
 async def get_user(db: AsyncSession,
                    user_id: int) -> User:
-    result = await db.execute(select(User).filter(User.id == user_id))
+    result = await db.execute(select(User).filter(User.id == int(user_id)))
     return result.scalars().first()
 
 
