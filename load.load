@@ -1,5 +1,0 @@
-LOAD DATABASE
-FROM sqlite:///home/stefan/Workspace/EasyGames/EasyGames_backend/easygames_db.db
-INTO postgresql+asyncpg://admin:admin@localhost/easygames_db
-
-with include drop, create tables, create indexes, reset sequences ;
