@@ -3,8 +3,6 @@ Session module for database
 '''
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
-from dotenv import load_dotenv
-import os
 from app.core.config import settings
 from typing import AsyncGenerator
 
