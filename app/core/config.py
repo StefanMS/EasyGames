@@ -24,7 +24,7 @@ class Settings(BaseSettings):
     ADMIN_USER_LAST_NAME: str = os.getenv('ADMIN_USER_LAST_NAME')
 
     BUCKET_URL: str = os.getenv('BUCKET_URL')
-
+    API_URL: str = os.getenv('API_URL')
     class Config:
         env_file = ".env"
 
