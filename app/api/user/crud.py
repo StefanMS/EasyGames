@@ -84,8 +84,7 @@ async def delete_user(db: AsyncSession,
                       user_id: int,
                       current_user: User) -> User:
     if current_user.is_superuser:
-        result = await db.execute(select(User).filter_by(
-            User.id == user_id))
+        result = await db.execute(select(User).filter(User.id == user_id))
         user = result.scalars().first()
         if user:
             await db.delete(user)

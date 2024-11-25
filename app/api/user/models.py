@@ -14,16 +14,14 @@ class User(Base):
     '''
     __tablename__ = "users"
 
-    id = Column(BigInteger, primary_key=True, index=True)
+    id = Column(BigInteger, primary_key=True, index=True, autoincrement=True)
     email = Column(String, unique=True, index=True)
     first_name = Column(String(150))
     last_name = Column(String(150))
     password = Column(String)
-    balance = Column(Integer, default=0)
+    balance = Column(Integer, default=100)
     is_superuser = Column(Boolean, default=False)
     # pylint: disable=not-callable
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
-    # notes = relationship("Note", back_populates="user")
-    # collections = relationship("Collection", back_populates="user")
     baskets = relationship("BiddingBasket", back_populates="user")
